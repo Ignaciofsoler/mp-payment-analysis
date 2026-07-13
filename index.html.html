@@ -34,6 +34,20 @@
     </style>
 </head>
 <body>
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #F5F5F5; display: flex; justify-content: center; align-items: center; z-index: 9999;">
+        <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 300px; border-top: 4px solid #FFE600;">
+            <h2 style="color: #2D3277; margin-top: 0;">Acceso Restringido</h2>
+            <input type="text" id="input-user" placeholder="Usuario" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <input type="password" id="input-pass" placeholder="Contraseña" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <button onclick="intentarLogin()" style="width: 100%; padding: 10px; background: #3483FA; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px;">Ingresar</button>
+            <p id="login-error" style="color: #F23D4F; font-size: 13px; display: none; margin-top: 10px;">Credenciales incorrectas</p>
+        </div>
+    </div>
+
+    <!-- ENVOLVER EL DASHBOARD -->
+    <div id="dashboard" style="display: none;">
+    <!-- Menú Flotante Lateral -->
     <!-- Menú Flotante Lateral -->
     <nav id="side-nav">
       <a href="#resumen" class="nav-link">Resumen Ejecutivo</a>
@@ -175,6 +189,8 @@
             <i>Proxys de mercado (Insight 3): Los estudios de Checkout.com (The Black Box of E-commerce) y ClearSale (False Declines & Consumer Behavior) evalúan el abandono en comercio electrónico. Se aplican en este análisis como un proxy metodológico válido y conservador para proyectar la nula tolerancia a la fricción en el ecosistema de billeteras virtuales.</i>
         </div>
 
+</div> <!-- CIERRE DEL DASHBOARD -->
+
 <!-- SCRIPT PARA ANIMACIONES, REDIMENSIONADO Y NAVEGACIÓN -->
     <script>
         function resizeAllPlots() {
@@ -230,7 +246,29 @@
                 }
             });
         }, { rootMargin: '-30% 0px -60% 0px' });
-        sections.forEach(s => spyObserver.observe(s));
+    sections.forEach(s => spyObserver.observe(s));
+
+        // LÓGICA DE LOGIN
+        function intentarLogin() {
+            const user = document.getElementById('input-user').value;
+            const pass = document.getElementById('input-pass').value;
+
+            if (user === 'meli' && pass === '1234') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                // Fundamental: redimensionar los gráficos para que no se rompan
+                resizeAllPlots();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        // Para poder ingresar apretando Enter
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+                intentarLogin();
+            }
+        });
     </script>
 </body>
 </html>
