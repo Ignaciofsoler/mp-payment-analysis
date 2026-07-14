@@ -18,10 +18,29 @@
         h2 { margin-top: 40px; border-bottom: 1px solid #E8E8E8; padding-bottom: 10px; }
         p, li { font-size: 16px; line-height: 1.6; color: #333333; }
         .kpi-container { margin: 30px 0; }
-        .chart-card { background: white; border-top: 4px solid #3483FA; border-radius: 0 0 12px 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); padding: 24px; margin: 24px 0; }
-        
-        /* FIX RESPONSIVE PLOTLY */
-        .plotly-graph-div, .js-plotly-plot { width: 100% !important; }
+       .chart-card { 
+    background: white; 
+    border-top: 4px solid #3483FA; 
+    border-radius: 0 0 12px 12px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+    padding: 24px; 
+    margin: 24px 0; 
+    /* NUEVO: Permite scroll horizontal en pantallas chicas para que no rompa el diseño */
+    overflow-x: auto; 
+}
+
+/* FIX RESPONSIVE PLOTLY */
+.plotly-graph-div, .js-plotly-plot { 
+    width: 100% !important; 
+    /* NUEVO: Flexbox obliga al contenedor a centrar su contenido */
+    display: flex !important; 
+    justify-content: center !important; 
+}
+
+/* NUEVO: Fuerza al SVG interno de Plotly a mantener un margen automático centrado */
+.plotly-graph-div .svg-container {
+    margin: 0 auto !important;
+}
         
         /* MENÚ FLOTANTE */
         #side-nav { position: fixed; top: 100px; right: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px; font-size: 13px; z-index: 100; width: 150px; }
